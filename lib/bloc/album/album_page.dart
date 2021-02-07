@@ -85,11 +85,15 @@ class _AlbumHomePageState extends State<AlbumHomePage> {
           if (AlbumState is AlbumInitialState ||
               AlbumState is AlbumLoadingState && _mAlbumList.isEmpty) {
             return CircularProgressIndicator();
-          } else if (AlbumState is AlbumsLoadedState) {
+          }
+
+          else if (AlbumState is AlbumsLoadedState) {
             _mAlbumList.addAll(AlbumState.mAlbumList);
             BlocProvider.of<AlbumBloc>(context).isFetchingData = false;
             Scaffold.of(context).hideCurrentSnackBar();
-          } else if (AlbumState is AlbumErrorState && _mAlbumList.isEmpty) {
+          }
+
+          else if (AlbumState is AlbumErrorState && _mAlbumList.isEmpty) {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -107,6 +111,8 @@ class _AlbumHomePageState extends State<AlbumHomePage> {
               ],
             );
           }
+
+
           return ListView.separated(
             controller: _scrollController
               ..addListener(() {
