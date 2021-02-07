@@ -28,10 +28,41 @@ class _AlbumHomePageState extends State<AlbumHomePage> {
     super.dispose();
   }
 
+  Widget albumInfo(AlbumModel mAlbumObject) => Card(
+    elevation: 4.0,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(6.0),
+    ),
+    margin: EdgeInsets.fromLTRB(16,24,16,4),
+    child : IntrinsicHeight(
+        child:Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Container(
+                margin:  EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                    image:DecorationImage(
+                      image: new AssetImage('assets/images/placeholder.png'),fit: BoxFit.cover,),
+                    borderRadius: new BorderRadius.all(new Radius.circular(3))),
+                height: 80,width:80,
+              ),
+              Expanded(child:Container(
+                alignment:Alignment.centerLeft,
+//                margin:  EdgeInsets.all(16),
+                child: Text(mAlbumObject.title),
+              )),
+              SizedBox(width:16),
+            ]
+        )
+    ),
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
         title: Text('Albums'),
     ),
     body: Center(
@@ -72,7 +103,7 @@ class _AlbumHomePageState extends State<AlbumHomePage> {
                   icon: Icon(Icons.refresh),
                 ),
                 const SizedBox(height: 15),
-                Text('${AlbumState.error.message}\nTap to Retry.', textAlign: TextAlign.center),
+                Text('${AlbumState.error.message}', textAlign: TextAlign.center),
               ],
             );
           }
@@ -87,17 +118,7 @@ class _AlbumHomePageState extends State<AlbumHomePage> {
                     ..add(FetchNextAlbumListEvent());
                 }
               }),
-            itemBuilder: (context, index) => Container(
-              padding: EdgeInsets.all(20.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("${_mAlbumList[index].id}  ${_mAlbumList[index].title}"),
-//                  Divider(),
-                ],
-              ),
-            ),
+            itemBuilder: (context, index) => albumInfo(_mAlbumList[index]),
             separatorBuilder: (context, index) => const SizedBox(height: 20),
             itemCount: _mAlbumList.length,
           );

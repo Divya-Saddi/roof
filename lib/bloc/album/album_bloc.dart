@@ -10,7 +10,7 @@ import 'dart:io';
 
 
 class AlbumBloc extends Bloc<AlbumEvent, AlbumState> {
-  //
+
   final AlbumsRepository mAlbumRepo;
   List<AlbumModel> mAlbumList;
   int start = 0;
